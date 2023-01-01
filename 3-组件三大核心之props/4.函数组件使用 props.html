@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.函数组件使用 props</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/prop-types@15.6.2/prop-types.js"></script>
+
+    <script type="text/babel">
+        function Person(props) {
+            return (
+                <ul>
+                    <li>姓名：{props.name}</li>
+                    <li>性别：{props.sex}</li>
+                    <li>年龄：{props.age + 1}</li>
+                </ul>
+            )
+
+        }
+
+        //设置 props 类型和必要性
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number
+        }
+
+        //设置 props 默认值
+        Person.defaultProps = {
+            sex: '保密',
+            age: 19
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("test"))
+
+        root.render(<Person name="tom" />)
+
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>2.state_简写</title>
     </head>
     <body>
         <div id="test"></div>
@@ -24,9 +24,22 @@
 
         <script type="text/babel">
             class Demo extends React.Component {
+                state = {
+                    isHot: true,
+                }
+                // 自定义方法--要用赋值语句的形象+箭头函数
+                demo = () => {
+                    this.setState({
+                        isHot: !this.state.isHot,
+                    })
+                }
+
                 render() {
-                    //render 在类的原型对象上
-                    return <h2>类创建的组件</h2>
+                    return (
+                        <h2 onClick={this.demo}>
+                            今天天气很{this.state.isHot ? "炎热" : "寒冷"}
+                        </h2>
+                    )
                 }
             }
             const root = ReactDOM.createRoot(document.getElementById("test"))

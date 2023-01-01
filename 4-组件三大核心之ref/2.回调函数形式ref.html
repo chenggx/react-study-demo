@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>回调函数形式ref</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Demo extends React.Component {
+            showData = () => {
+                const input = this.input1
+                alert(input.value)
+            }
+
+            showData2 = () => {
+                const input = this.input2
+                alert(input.value)
+            }
+            // 如此写法是为了解决回调调用第一次为 null 的问题  https://zh-hans.reactjs.org/docs/refs-and-the-dom.html#caveats-with-callback-refs
+            saveInput = (currentNode) => {
+                this.input2 = currentNode
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input ref={(currentNode) => { this.input1 = currentNode }} type="text" placeholder="点击按钮提示数据" /> &nbsp;
+                        <button onClick={this.showData}>点我提示左侧数据</button> &nbsp;
+                        <input onBlur={this.showData2} ref={this.saveInput} type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("test"))
+
+        root.render(<Demo />)
+
+    </script>
+</body>
+
+</html>
