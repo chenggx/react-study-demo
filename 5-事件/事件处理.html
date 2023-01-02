@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件处理</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Demo extends React.Component {
+            /*
+                1. 通过 onXxx 属性置顶事件处理函数（注意大小写），不使用 onxxx 的原生dom 事件是为了更好的兼容性。内部做了兼容处理
+                2. 通过 event.target 得到发生事件的 DOM 元素对象
+            */
+            input1 = React.createRef()
+
+            showData = () => {
+                const input = this.input1.current
+                alert(input.value)
+            }
+
+            showData2 = (event) => {
+                alert(event.target.value)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input ref={this.input1} type="text" placeholder="点击按钮提示数据" /> &nbsp;
+                        <button onClick={this.showData}>点我提示左侧数据</button> &nbsp;
+                        <input onBlur={this.showData2} type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("test"))
+
+        root.render(<Demo />)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.父子组件的生命周期（旧）</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        class A extends React.Component {
+            state = {
+                carName: '奔驰'
+            }
+
+            changeCar = () => {
+                this.setState({
+                    carName: '宝马'
+                })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h2>我是 A 组件 </h2>
+                        <button onClick={this.changeCar}>换车</button>
+                        <B carName={this.state.carName} />
+                    </div>
+                )
+            }
+        }
+
+        class B extends React.Component {
+            //组件将要接受新的 props 的钩子
+            componentWillReceiveProps(props) {
+                console.log('B--componentWillReceiveProps', props)
+            }
+
+            //控制组件更新的「阀门」
+            shouldComponentUpdate() {
+                console.log('B---shouldComponentUpdate')
+                return true
+            }
+
+            //组件将要被更新时调用
+            componentWillUpdate() {
+                console.log('B---componentWillUpdate')
+            }
+
+            //组件更新完毕时调用
+            componentDidUpdate() {
+                console.log('B---componentDidUpdate')
+            }
+
+            render() {
+                console.log('B---render')
+                return (
+                    <div>
+                        <h2>我是 B 组件 </h2>
+                        <h2>我接受到的 A 组件的车名为：{this.props.carName}</h2>
+                    </div>
+                )
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("test"))
+
+        root.render(<A />)
+
+    </script>
+</body>
+
+</html>
