@@ -14,9 +14,10 @@ export default function App() {
         <div className="row">
             <div className="col-xs-2 col-xs-offset-2">
                 <div className="list-group">
+                    {/* <NavLink className={({ isActive }) => "list-group-item" + (isActive ? " atguigu" : "")} to='about'>About</NavLink> */}
+                    {/* <NavLink className={({ isActive }) => "list-group-item" + (isActive ? " atguigu" : "")} to='home'>Home</NavLink> */}
                     <MyNavlink to="/about">About</MyNavlink>
-                    {/* end 表示父级路由不显示高亮 */}
-                     <MyNavlink to="/home" end>Home</MyNavlink>
+                     <MyNavlink to="/home">Home</MyNavlink>
                 </div>
             </div>
             <div className="col-xs-6">
