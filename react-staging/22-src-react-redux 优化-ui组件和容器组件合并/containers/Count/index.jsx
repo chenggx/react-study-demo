@@ -1,6 +1,15 @@
+//引入 connect 用于连接 UI 组件和 redux
+import { connect } from "react-redux"
+
+import {
+    createIncrementAction,
+    createDecrementAction,
+    createIncrementAsyncAction,
+} from "../../redux/count_action"
+
 import React, { Component } from "react"
 
-export default class Count extends Component {
+ class Count extends Component {
     increment = () => {
         const value = this.selectNum.value
         this.props.jia(value * 1)
@@ -39,3 +48,21 @@ export default class Count extends Component {
         )
     }
 }
+
+//使用 connect 创建并暴露一个 Count 的容器组件
+export default connect(
+    (state) => ({ count: state }),
+    // 一般写法
+    // (dispatch) => ({
+    //     jia: (num) => dispatch(createIncrementAction(num)),
+    //     jian: (num) => dispatch(createDecrementAction(num)),
+    //     jiaAsync: (num, time) =>
+    //         dispatch(createIncrementAsyncAction(num, time)),
+    // })
+    //精简写法
+    {
+        jia: createIncrementAction,
+        jian: createDecrementAction,
+        jiaAsync: createIncrementAsyncAction,
+    }
+)(Count)
